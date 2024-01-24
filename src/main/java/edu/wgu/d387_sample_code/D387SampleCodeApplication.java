@@ -1,15 +1,17 @@
 package edu.wgu.d387_sample_code;
 
-import edu.wgu.d387_sample_code.translation.GetLangproperty;
+import edu.wgu.d387_sample_code.translation.MessageService;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.ClassPathResource;
-import java.util.concurrent.ExecutorService;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static java.util.concurrent.Executors.newFixedThreadPool;
 
 @SpringBootApplication
 public class D387SampleCodeApplication {
@@ -18,8 +20,8 @@ public class D387SampleCodeApplication {
         SpringApplication.run(D387SampleCodeApplication.class, args);
 
 
-        GetLangproperty getLangproperty = new GetLangproperty();
-        System.out.println(getLangproperty.english());
+        MessageService getLangproperty = new MessageService();
+        //System.out.println(english());
 
 /*
         try {
@@ -43,22 +45,27 @@ public class D387SampleCodeApplication {
 */
 
 
-
     }
 
     public static String english() {
-        Properties properties = null;
-        try {
-            properties = new Properties();
-            InputStream stream = new ClassPathResource("translation_en_US.properties").getInputStream();
-            properties.load(stream);
+        ExecutorService messageExecutor = Executors.newFixedThreadPool(2);
 
+        String[] returnVal = {""}; // Use an array to hold the mutable result
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assert properties != null;
-        return properties.getProperty("welcome");
+        Properties properties = new Properties();
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                InputStream stream = new ClassPathResource("translation_en_US.properties").getInputStream();
+                properties.load(stream);
+                returnVal[0] = properties.getProperty("welcome");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, messageExecutor);
+
+        // Wait for the asynchronous task to complete
+        future.join();
+
+        return returnVal[0];
     }
-
 }

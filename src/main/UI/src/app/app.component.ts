@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
+import {TranslationService} from './translation.service';
 
 
 
@@ -15,7 +16,9 @@ import {map} from "rxjs/operators";
 })
 export class AppComponent implements OnInit{
 
-  constructor(private httpClient:HttpClient){}
+  welcomeMessage: string = "";
+
+  constructor(private httpClient:HttpClient, private translationService: TranslationService){}
 
   private baseURL:string='http://localhost:8080';
 
@@ -28,11 +31,21 @@ export class AppComponent implements OnInit{
   currentCheckInVal!:string;
   currentCheckOutVal!:string;
 
-    ngOnInit(){
+  ngOnInit(){
       this.roomsearch= new FormGroup({
         checkin: new FormControl(' '),
         checkout: new FormControl(' ')
       });
+
+
+    this.translationService.getMessage().subscribe(
+      (message: string) => {
+        this.welcomeMessage = message;
+        console.log("Welcome Message: ", this.welcomeMessage);
+      }
+    );
+
+
 
  //     this.rooms=ROOMS;
 
