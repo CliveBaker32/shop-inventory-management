@@ -36,7 +36,7 @@ public class MessageRestController {
         ZoneId zEastern = ZoneId.of("America/New_York"); // Eastern Time
         ZoneId ZMtc = ZoneId.of("America/Denver"); // Mountain Time
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
 
 
         ZoneId zoneId = ZoneId.systemDefault();
