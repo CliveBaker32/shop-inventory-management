@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -20,8 +24,35 @@ public class D387SampleCodeApplication {
         SpringApplication.run(D387SampleCodeApplication.class, args);
 
 
-        MessageService getLangproperty = new MessageService();
-        //System.out.println(english());
+
+
+/*
+        ZoneId zUtc = ZoneId.of("UTC"); // Coordinated Universal Time
+        ZoneId zEastern = ZoneId.of("America/New_York"); // Eastern Time
+        ZoneId ZMtc = ZoneId.of("America/Denver"); // Mountain Time
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+
+        ZoneId zoneId = ZoneId.systemDefault();
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(zoneId);
+
+        ZonedDateTime zonedDateTimeUniversal = zonedDateTime.withZoneSameInstant(zUtc);
+        String formattedUniversalTime = zonedDateTimeUniversal.format(formatter);
+        System.out.println("Universal time " + formattedUniversalTime);
+
+
+        ZonedDateTime zonedDateTimeEastern = zonedDateTime.withZoneSameInstant(zEastern);
+        String formattedEasternTime = zonedDateTimeEastern.format(formatter);
+        System.out.println("Eastern time " + formattedEasternTime);
+
+
+        ZonedDateTime zonedDateTimeMountain = zonedDateTime.withZoneSameInstant(ZMtc);
+        String formattedMountainTime = zonedDateTimeMountain.format(formatter);
+        System.out.println("Mountain time " + formattedMountainTime);
+*/
 
 /*
         try {
@@ -44,28 +75,50 @@ public class D387SampleCodeApplication {
         }
 */
 
-
-    }
-
-    public static String english() {
+/*
         ExecutorService messageExecutor = Executors.newFixedThreadPool(2);
 
-        String[] returnVal = {""}; // Use an array to hold the mutable result
-
-        Properties properties = new Properties();
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+        Properties properties=new Properties();
+        messageExecutor.execute(()-> {
             try {
-                InputStream stream = new ClassPathResource("translation_en_US.properties").getInputStream();
+                InputStream stream = new ClassPathResource("translation_fr_CA.properties").getInputStream();
                 properties.load(stream);
-                returnVal[0] = properties.getProperty("welcome");
+                System.out.println(properties.getProperty("welcome"));
+
+                stream = new ClassPathResource("translation_fr_CA.properties").getInputStream();
+                properties.load(stream);
+                System.out.println(properties.getProperty("welcome"));
+
+                stream = new ClassPathResource("translation_fr_CA.properties").getInputStream();
+                properties.load(stream);
+                System.out.println(properties.getProperty("welcome"));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, messageExecutor);
+        });
+        messageExecutor.execute(()-> {
+            try {
+                InputStream stream = new ClassPathResource("translation_en_US.properties").getInputStream();
+                properties.load(stream);
+                System.out.println(properties.getProperty("welcome"));
 
-        // Wait for the asynchronous task to complete
-        future.join();
+                stream = new ClassPathResource("translation_en_US.properties").getInputStream();
+                properties.load(stream);
+                System.out.println(properties.getProperty("welcome"));
 
-        return returnVal[0];
+                stream = new ClassPathResource("translation_en_US.properties").getInputStream();
+                properties.load(stream);
+                System.out.println(properties.getProperty("welcome"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+*/
     }
+
+
+
+
+
 }

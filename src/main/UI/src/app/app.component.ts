@@ -16,7 +16,10 @@ import {TranslationService} from './translation.service';
 })
 export class AppComponent implements OnInit{
 
+  // For welcome message from backend to log to console
   welcomeMessage: string = "";
+  // For time zones from backend to log to console
+  timeZones: string = "";
 
   constructor(private httpClient:HttpClient, private translationService: TranslationService){}
 
@@ -42,6 +45,14 @@ export class AppComponent implements OnInit{
       (message: string) => {
         this.welcomeMessage = message;
         console.log("Welcome Message: ", this.welcomeMessage);
+      }
+    );
+
+
+    this.translationService.getTimeZone().subscribe(
+      (timeZones: string) => {
+        this.timeZones = timeZones;
+        console.log("Time Zones", this.timeZones);
       }
     );
 

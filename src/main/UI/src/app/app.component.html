@@ -15,6 +15,8 @@
     <nav id="nav" style="position: relative; top: 0; left: 0; bottom: auto; right: auto; width: 100%;">
       <div class="navbar">
         <div class="brand"><a href="/#welcome">Landon <span>Hotel</span></a></div>
+
+        <!--For part B1-->
         <div [innerHTML]="welcomeMessage" style="color: white"></div>
       </div><!-- navbar -->
     </nav>
@@ -23,6 +25,14 @@
 <main id="wrapper">
   <div class="scene" id="welcome">
     <article class="content">
+
+      <!-- For Part B3 -->
+      <div>
+        <p>
+          Join us for an online, live presentation held at the Landon Hotel.
+        </p> <br>
+        <p [innerHTML]="timeZones"></p>
+      </div>
 
 
 
@@ -76,8 +86,9 @@
                 </td>
                 <td>
                   <strong>Room #: {{room.roomNumber}}</strong><br/>
+                  <!--For part B2-->
                   <strong>Price: {{room.price | currency: 'USD': 'symbol'}}</strong><br/>
-                  <strong>Price: {{room.price | currency: 'CAD': 'C$'}}</strong><br/>
+                  <strong>Price: {{room.price | currency: 'CAD': 'symbol'}}</strong><br/>
                   <strong>Price: {{room.price | currency: 'EUR': 'symbol'}}</strong>
                 </td>
                 <td>

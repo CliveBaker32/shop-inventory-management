@@ -16,5 +16,11 @@ export class TranslationService {
     return this.http.get<string>(url, {responseType: 'text' as 'json'});
   }
 
+  getTimeZone(): Observable<string> {
+    const url = 'http://localhost:8080/welcome/timezone'; // Update with your Spring Boot backend URL
+    return this.http.get<string>(url, {responseType: 'text' as 'json'});
+  }
+
+
 
 }
